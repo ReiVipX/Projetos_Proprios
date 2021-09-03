@@ -17,21 +17,20 @@ document.querySelector('.reset').addEventListener('click', resetGame);
 document.querySelector('.play').addEventListener('click', startGame);
 
 // Functions
-// ARRUMAR -----------------------------------------------------------------------------
 function aim(e){
     x = e.pageX - screen.offsetLeft;
-    y = e.pageY - (screen.offsetTop+5);
+    y = e.pageY - (screen.offsetTop);
 
     echoColor(x,y);
 
     console.log(red,green,blue,alpha);
-    return (x,y);
+
 }
 function echoColor(x,y){
-    let debugX = (3);
-    let debugY = (3.4);
+    let debugX = (6);
+    let debugY = (6);
     
-	let imgData = ctx.getImageData((debugX*x), (debugY*y), 1, 1);
+	let imgData = ctx.getImageData((x-debugX), (y-debugY), 1, 1);
 	red = imgData.data[0];
 	green = imgData.data[1];
 	blue = imgData.data[2];
@@ -39,7 +38,6 @@ function echoColor(x,y){
     
     return (red, green, blue, alpha);
 }
-// ARRUMAR -----------------------------------------------------------------------------
 function shoot(e){
     x = e.pageX - screen.offsetLeft;
     y = e.pageY - (screen.offsetTop+5);
@@ -47,7 +45,7 @@ function shoot(e){
     console.log(x,y);
     if(red !== 0 || green !== 0 || blue !== 0){
         points++;
-        timer -= 50;
+        this.timer -= 50;
         despawn();
         //console.log("CERTO");
         //console.log(timer);
@@ -55,23 +53,23 @@ function shoot(e){
 }
 function spawn(){
     minX = Math.ceil(0);
-    maxX = Math.floor(screen.width - 15);
+    maxX = Math.floor(screen.width - 50);
     minY = Math.ceil(0);
-    maxY = Math.floor(screen.height - 15);
+    maxY = Math.floor(screen.height - 50);
 
     enemyPositionX = Math.floor(Math.random() * (maxX - minX)) + minX;
     enemyPositionY = Math.floor(Math.random() * (maxY - minY)) + minY;
 
-    enemyPositionX = 0;
-    enemyPositionY = 0;
+    enemyPositionX = 400;
+    enemyPositionY = 300;
 
-    console.log(enemyPositionX,enemyPositionY);
+    //console.log(enemyPositionX,enemyPositionY);
 
     enemy(enemyPositionX, enemyPositionY);
 }
 function enemy(enemyPositionX, enemyPositionY){
     ctx.fillStyle = 'red';
-    ctx.fillRect(enemyPositionX, enemyPositionY, 15, 15);
+    ctx.fillRect(enemyPositionX, enemyPositionY, 50, 50);
 }
 function despawn(){
     clearScreen();
