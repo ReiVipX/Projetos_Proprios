@@ -1,0 +1,39 @@
+*{
+    margin-top: 5px;
+}
+
+body{
+    background-color: rgb(70, 70, 70);
+}
+
+.interface{
+    float: left;
+    margin-top: 0px;
+}
+
+#screen{
+    background-color: white;
+    width: 900px;
+    height: 500px;
+    border: 5px solid black;
+    cursor: crosshair;
+}
+
+.buttons{
+    margin-top: 3px;
+    padding-top: 4px;
+    height: 25px;
+    width: 99px ;
+    text-align: center;
+}
+
+.score{
+    color: white;
+    font-size: 50px;
+    text-align: right;
+    margin-right: 100px;
+}
+
+#points{
+    margin-right: 100px;
+}
