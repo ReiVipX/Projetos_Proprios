@@ -1,20 +1,38 @@
 // Initial Data
 let pointView = document.getElementById('points');
+let lifesView = document.getElementById('lifes');
 let screen = document.getElementById('screen');
 let ctx = screen.getContext('2d');
 let life = 3;
 let points = 0;
 let start = false;
-let time = 5000;
-let timerReset;
+let timer = 1000;
+let timeS;
 
 // Events
-screen.addEventListener('mousedown', shoot);
+screen.addEventListener('mousedown', click);
 document.querySelector('.reset').addEventListener('click', resetGame);
 document.querySelector('.play').addEventListener('click', startGame);
 
 // Functions
-function echoColor(x,y){
+function click(e){ // Click the ENEMY
+    x = e.pageX - screen.offsetLeft;
+    y = e.pageY - screen.offsetTop;
+
+    color(x,y);
+
+    if((red !== 0 || green !== 0 || blue !== 0) && start == true){
+        points++;
+        pointView.innerText = points;
+        lifesView.innerText = life;
+        if(timer >= 100){
+            timer -= 50;
+        }
+        stopTimer();
+        despawn();
+    }
+}
+function color(x,y){ // Find the COLOR where the mouse is
     let debugX = (6);
     let debugY = (6);
     
@@ -26,22 +44,7 @@ function echoColor(x,y){
     
     return (red, green, blue, alpha);
 }
-function shoot(e){
-    x = e.pageX - screen.offsetLeft;
-    y = e.pageY - screen.offsetTop;
-
-    echoColor(x,y);
-
-    if(red !== 0 || green !== 0 || blue !== 0){
-        points++;
-        pointView.innerText = points;
-        clearInterval(timerReset)
-        time -= 50;
-        setInterval(despawn(), 2000);
-        console.log(time);
-    }
-}
-function spawn(){
+function spawn() { // Make a new ENEMY position and SPAWN a ENEMY
     let enemyPositionX;
     let enemyPositionY;
 
@@ -55,29 +58,58 @@ function spawn(){
 
     enemy(enemyPositionX, enemyPositionY);
 }
-function enemy(enemyPositionX, enemyPositionY){
+function enemy(enemyPositionX, enemyPositionY){ // Make a ENEMY
     ctx.fillStyle = 'red';
     ctx.fillRect(enemyPositionX, enemyPositionY, 50, 50);
 }
-function despawn(){
-    clearScreen();
-    spawn();
+function despawn(){  // DESPAWN and SPAWN a new ENEMY
+        clearScreen();
+        if(life == 0){
+            gameOver();
+        }else {
+            spawn();
+            startTimer();
+        }
 }
-function startGame(){
+function startGame(){ // START the game
     if( start === false){
-        timerReset = setInterval(despawn(), time);
+        resetGame();
+        spawn();
+        startTimer();
     }else if(start === true){
         console.log("ERRO");
-        return false;
     }
     start = true;
 }
-function resetGame(){
+function gameOver() { // GAME OVER screen
+    clearScreen();
+    start = false;
+    ctx.font = "100px Arial";
+    ctx.fillStyle = 'purple';
+    ctx.fillText("GAME OVER",130,258);
+}
+function resetGame(){ // RESET the game
     life = 3;
     time = 5000;
     points = 0;
+    pointView.innerText = points;
+    lifesView.innerText = life;
+    stopTimer();
     clearScreen();
-    spawn();
+    start = false;
+}
+function startTimer() { // start a TIMER
+    timeS = setTimeout(() => {
+        life--; 
+        lifesView.innerText = life;
+        if(life == 0){
+            gameOver()
+        }else{
+            despawn()
+        }}, timer);
+}
+function stopTimer() { // stop the TIMER
+    clearTimeout(timeS);
 }
 function clearScreen(){
     ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);

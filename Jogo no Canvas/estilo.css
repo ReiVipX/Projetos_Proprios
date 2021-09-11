@@ -1,7 +1,3 @@
-/*{
-    margin-top: 5px;
-}
-*/
 body{
     background-color: rgb(70, 70, 70);
 }
@@ -25,13 +21,23 @@ body{
     text-align: center;
 }
 
-.score{
+.score {
     color: white;
     font-size: 50px;
     text-align: right;
-    margin-right: 100px;
+    margin-right: 155px;
+}
+#points{
+    margin-right: 45px;
 }
 
-#points{
-    margin-right: 100px;
+.life {
+    color: red;
+    font-size: 50px;
+    text-align: right;
+    margin-right: 165px;
 }
+#lifes {
+    margin-right: 35px;    
+}
+
