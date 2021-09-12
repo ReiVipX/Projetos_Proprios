@@ -6,8 +6,8 @@ let ctx = screen.getContext('2d');
 let life = 3;
 let points = 0;
 let start = false;
-let timer = 1000;
-let timeS;
+let timer = 5000;
+let timeSet;
 
 // Events
 screen.addEventListener('mousedown', click);
@@ -25,7 +25,7 @@ function click(e){ // Click the ENEMY
         points++;
         pointView.innerText = points;
         lifesView.innerText = life;
-        if(timer >= 100){
+        if(timer >= 400){
             timer -= 50;
         }
         stopTimer();
@@ -90,7 +90,7 @@ function gameOver() { // GAME OVER screen
 }
 function resetGame(){ // RESET the game
     life = 3;
-    time = 5000;
+    timer = 5000;
     points = 0;
     pointView.innerText = points;
     lifesView.innerText = life;
@@ -99,7 +99,7 @@ function resetGame(){ // RESET the game
     start = false;
 }
 function startTimer() { // start a TIMER
-    timeS = setTimeout(() => {
+    timeSet = setTimeout(() => {
         life--; 
         lifesView.innerText = life;
         if(life == 0){
@@ -109,7 +109,7 @@ function startTimer() { // start a TIMER
         }}, timer);
 }
 function stopTimer() { // stop the TIMER
-    clearTimeout(timeS);
+    clearTimeout(timeSet);
 }
 function clearScreen(){
     ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
